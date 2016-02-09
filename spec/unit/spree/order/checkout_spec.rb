@@ -4,15 +4,17 @@ module Spree
       let(:order) { OrderWalkthrough.up_to(:delivery) }
       let(:credit_card) { create(:credit_card) }
 
-      let(:gateway) { create(:adyen_cse_payment_method, name: "Adyen") }
+      let(:gateway) { create(:adyen_cse_payment_method, name: 'Adyen') }
 
-      let(:response) { double("Response", success?: true,
-                                          psp_reference: 'ZAJxC6m69BJFDLvE',
-                                          result_code: 'Authorised') }
+      let(:response) do
+        double('Response', success?: true,
+                           psp_reference: 'ZAJxC6m69BJFDLvE',
+                           result_code: 'Authorised')
+      end
 
       let(:details) do
-        double("Details", details: [
-          { card: { number: "1111", expiry_date: 1.year.from_now }, recurring_detail_reference: 123 }
+        double('Details', details: [
+          { card: { number: '1111', expiry_date: 1.year.from_now }, recurring_detail_reference: 123 }
         ])
       end
 
@@ -20,8 +22,8 @@ module Spree
         expect(gateway.provider).to receive(:authorise_payment).and_return(response)
       end
 
-      it "transitions to complete just fine" do
-        expect(order.state).to eq "payment"
+      it 'transitions to complete' do
+        expect(order.state).to eq 'payment'
 
         order.payments.create! do |p|
           p.amount = 1

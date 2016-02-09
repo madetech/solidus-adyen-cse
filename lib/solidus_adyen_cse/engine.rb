@@ -1,12 +1,11 @@
 module SolidusAdyenCse
   class Engine < Rails::Engine
-    require "adyen"
-    require "solidus_core"
+    require 'adyen'
+    require 'solidus_core'
 
     isolate_namespace Spree
     engine_name 'solidus_adyen_cse'
 
-    # use rspec for tests
     config.generators do |g|
       g.test_framework :rspec
     end
@@ -17,6 +16,6 @@ module SolidusAdyenCse
       end
     end
 
-    config.to_prepare &method(:activate).to_proc
+    config.to_prepare(&method(:activate).to_proc)
   end
 end

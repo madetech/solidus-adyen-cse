@@ -70,7 +70,7 @@ module Spree
         response
       end
 
-      def credit(money, _credit_card, _response_code, _options = {})
+      def credit(money, _credit_card, response_code, _options = {})
         response = provider.cancel_or_refund_payment(response_code,
                                                      transaction_amount(options[:currency], money))
 

@@ -12,3 +12,6 @@ Style/Documentation:
 
 Style/SignalException:
   Enabled: false
+
+Style/SingleLineMethods:
+  Enabled: false

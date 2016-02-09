@@ -62,9 +62,7 @@ module Spree
 
           def response.cvv_result; {}; end
         else
-          def response.to_s
-            "#{result_code} - #{refusal_reason}"
-          end
+          def response.to_s; "#{result_code} - #{refusal_reason}"; end
         end
 
         response
@@ -81,8 +79,6 @@ module Spree
       def authorize_card(money, response, options, card_details)
         response = authorize_payment(money, response, options, card_details)
 
-        puts response
-
         if response.success?
           def response.authorization; psp_reference; end
 
@@ -90,9 +86,7 @@ module Spree
 
           def response.cvv_result; { 'code' => result_code }; end
         else
-          def response.to_s
-            "#{result_code} - #{refusal_reason}"
-          end
+          def response.to_s; "#{result_code} - #{refusal_reason}"; end
         end
 
         response
@@ -109,7 +103,7 @@ module Spree
       end
 
       def transaction_amount(currency, amount)
-        { currency: currency, value: money }
+        { currency: currency, value: amount }
       end
 
       def adyen_options(options = {})

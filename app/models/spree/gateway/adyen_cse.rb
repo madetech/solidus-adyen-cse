@@ -1,6 +1,8 @@
 module Spree
   class Gateway
     class AdyenCse < Gateway
+      include SolidusAdyenCse::Common
+
       preference :api_username, :string
       preference :api_password, :string
       preference :merchant_account, :string
@@ -68,10 +70,30 @@ module Spree
         response
       end
 
-      def credit(money, _credit_card, _response_code, options = {})
+      def credit(money, _credit_card, _response_code, _options = {})
+        response = provider.cancel_or_refund_payment(response_code,
+                                                     transaction_amount(options[:currency], money))
+
+        if response.success?
+          def response.authorization; psp_reference; end
+        else
+          def response.to_s; refusal_reason; end
+        end
+
+        response
       end
 
-      def void(_response_code, _credit_card, options = {})
+      def void(response_code, _credit_card, _options = {})
+        response = provider.cancel_payment(response_code)
+
+        if response.success?
+          def response.authorization; psp_reference; end
+        else
+          def response.to_s
+            "#{result_code} - #{refusal_reason}"
+          end
+        end
+        response
       end
 
       private
@@ -100,29 +122,6 @@ module Spree
                                    adyen_shopper(options),
                                    card_details,
                                    adyen_options)
-      end
-
-      def transaction_amount(currency, amount)
-        { currency: currency, value: amount }
-      end
-
-      def adyen_options(options = {})
-        { recurring: false }.merge(options)
-      end
-
-      def adyen_shopper(options)
-        { reference: adyen_shopper_reference(options),
-          email: options[:email],
-          ip: options[:ip],
-          statement: "Order ##{options[:order_id]}" }
-      end
-
-      def adyen_shopper_reference(options)
-        if options[:customer_id].present?
-          options[:customer_id]
-        else
-          options[:email]
-        end
       end
     end
   end

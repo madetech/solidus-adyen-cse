@@ -1,7 +1,7 @@
 SolidusAdyenCse
 ===============
 
-[![Code Climate](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/gpa.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse)[![Test Coverage](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/coverage.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse/coverage)
+[![Code Climate](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/gpa.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse) [![Test Coverage](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/coverage.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse/coverage)
 
 Introduction goes here.
 

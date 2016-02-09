@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'adyen', ['2.0.0.pre2']
 
   s.add_development_dependency 'rspec-rails', '~> 3.2'
-  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'sass-rails'
   s.add_development_dependency 'coffee-rails'
@@ -30,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'ffaker'
   s.add_development_dependency 'rubocop', '0.35.1'
   s.add_development_dependency 'rubocop-rspec', '1.3.1'
+  s.add_development_dependency 'codeclimate-test-reporter'
 end

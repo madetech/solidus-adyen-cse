@@ -11,7 +11,7 @@ module SolidusAdyenCse
     end
 
     initializer "spree.solidus_adyen_cse.payment_methods", after: "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Gateway::AdyenCse
+      app.config.spree.payment_methods << ::Spree::Gateway::AdyenCse
     end
 
     def self.activate

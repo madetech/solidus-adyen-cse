@@ -52,6 +52,22 @@ module Spree
       end
 
       def capture(money, response_code, options = {})
+        response = provider.capture_payment(response_code,
+                                            transaction_amount(options[:currency], money))
+
+        if response.success?
+          def response.authorization; psp_reference; end
+
+          def response.avs_result; {}; end
+
+          def response.cvv_result; {}; end
+        else
+          def response.to_s
+            "#{result_code} - #{refusal_reason}"
+          end
+        end
+
+        response
       end
 
       def credit(money, _credit_card, _response_code, options = {})
@@ -84,13 +100,16 @@ module Spree
 
       def authorize_payment(money, _response, options, card_details)
         reference = options[:order_id]
-        amount = { currency: options[:currency], value: money }
 
         provider.authorise_payment(reference,
-                                   amount,
+                                   transaction_amount(options[:currency], money),
                                    adyen_shopper(options),
                                    card_details,
                                    adyen_options)
+      end
+
+      def transaction_amount(currency, amount)
+        { currency: currency, value: money }
       end
 
       def adyen_options(options = {})

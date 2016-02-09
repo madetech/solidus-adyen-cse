@@ -10,6 +10,10 @@ module SolidusAdyenCse
       g.test_framework :rspec
     end
 
+    initializer "spree.solidus_adyen_cse.payment_methods", after: "spree.register.payment_methods" do |app|
+      app.config.spree.payment_methods << Gateway::AdyenCse
+    end
+
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)

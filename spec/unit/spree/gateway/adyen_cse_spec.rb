@@ -11,7 +11,6 @@ describe Spree::Gateway::AdyenCse do
                        psp_reference: psp_reference)
   end
 
-
   describe '#capture' do
     before do
       expect(gateway.provider).to receive(:capture_payment).and_return(response)

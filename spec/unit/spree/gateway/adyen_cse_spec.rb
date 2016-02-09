@@ -12,7 +12,7 @@ describe Spree::Gateway::AdyenCse do
   end
 
 
-  describe "#capture" do
+  describe '#capture' do
     before do
       expect(gateway.provider).to receive(:capture_payment).and_return(response)
     end
@@ -22,7 +22,7 @@ describe Spree::Gateway::AdyenCse do
     it { is_expected.to eq(psp_reference) }
   end
 
-  describe "#credit" do
+  describe '#credit' do
     before do
       expect(gateway.provider).to receive(:cancel_or_refund_payment).and_return(response)
     end
@@ -32,7 +32,7 @@ describe Spree::Gateway::AdyenCse do
     it { is_expected.to eq(psp_reference) }
   end
 
-  describe "#void" do
+  describe '#void' do
     before do
       expect(gateway.provider).to receive(:cancel_payment).and_return(response)
     end

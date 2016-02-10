@@ -14,7 +14,7 @@ module SolidusAdyenCse
       app.config.spree.payment_methods << ::Spree::Gateway::AdyenCse
     end
 
-    initializer "solidus_adyen_cse.assets.precompile", group: :all do |app|
+    initializer 'solidus_adyen_cse.assets.precompile', group: :all do |app|
       app.config.assets.precompile += %w( encrypt.adyen.min.js )
     end
 

@@ -14,6 +14,10 @@ module SolidusAdyenCse
       app.config.spree.payment_methods << ::Spree::Gateway::AdyenCse
     end
 
+    initializer "solidus_adyen_cse.assets.precompile", group: :all do |app|
+      app.config.assets.precompile += %w( encrypt.adyen.min.js )
+    end
+
     def self.activate
       Dir.glob(File.join(File.dirname(__FILE__), '../../app/**/*_decorator*.rb')) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)

@@ -10,7 +10,7 @@ module SolidusAdyenCse
     end
 
     def authorize_adyen_cse_payments_before_confirm!
-      return if !payment_required?
+      return unless payment_required?
 
       if authorize_adyen_cse_payments!
         true
@@ -22,9 +22,9 @@ module SolidusAdyenCse
     end
 
     def unprocessed_adyen_cse_payments
-      @unprocessed_adyen_cse_payments ||= payments.includes(:payment_method).where(spree_payment_methods: {
-        type: 'Spree::Gateway::AdyenCse'
-      }).select(&:checkout?)
+      payments.includes(:payment_method)
+        .where(spree_payment_methods: { type: 'Spree::Gateway::AdyenCse' })
+        .select(&:checkout?)
     end
 
     def authorize_adyen_cse_payments!
@@ -58,13 +58,13 @@ module SolidusAdyenCse
 
       process_adyen_cse_payments
     rescue Spree::Core::GatewayError => e
-      result = !!Spree::Config[:allow_checkout_on_gateway_error]
+      result = !Spree::Config[:allow_checkout_on_gateway_error].nil?
       errors.add(:base, e.message) && (return result)
     end
   end
 
   def raise_gateway_error(translation_key)
-    raise Spree::Core::GatewayError.new(translation_key)
+    raise Spree::Core::GatewayError.new(Spree.t(translation_key)), Spree.t(translation_key)
   end
 
   def increment_payment_total(amount)

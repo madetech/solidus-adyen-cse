@@ -38,11 +38,11 @@ module SolidusAdyenCse
     private
 
     def cancel_old_adyen_cse_payments
-      if !store_credit? && !['invalid', 'failed'].include?(state)
-        order.payments.adyen_authorized.where(payment_method: payment_method)
-          .where.not(id: id)
-          .each(&:invalidate!)
-      end
+      return if store_credit? && %w( invalid failed ).include?(state)
+
+      order.payments.adyen_authorized.where(payment_method: payment_method)
+        .where.not(id: id)
+        .each(&:invalidate!)
     end
 
     def process_cse_authorization

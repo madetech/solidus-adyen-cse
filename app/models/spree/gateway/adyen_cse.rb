@@ -39,13 +39,30 @@ module Spree
       # Gateway Methods
 
       def actions
-        %w(capture credit void)
+        %w(credit void)
       end
 
-      def authorize(money, response, options = {})
-        card_details = { encrypted: { json: response.encrypted_data } }
+      # We can't persist the encrypted_data, so we have to authorize early
+      def authorize(money, source, options = {})
+        card_details = { encrypted: { json: source.encrypted_data } }
 
-        authorize_card(money, response, options, card_details)
+        authorize_card(money, source, options, card_details)
+      end
+
+      # Authorization happens between payment -> confirm so we'll capture on complete?
+      #
+      # This is our capture, this does feel quite edgy.
+      def purchase(money, source, options = {})
+        order = Spree::Order.find_by(number: options[:order_id].split('-')[0])
+
+        payment = Spree::Payment.where(
+          order_id: order.id,
+          source_id: source.id,
+          payment_method_id: source.payment_method_id,
+          state: 'processing'
+        ).last
+
+        capture(money, payment.response_code, options)
       end
 
       def capture(money, response_code, options = {})
@@ -78,23 +95,26 @@ module Spree
         response
       end
 
-      def void(response_code, _credit_card, _options = {})
+      def cancel(response_code)
         response = provider.cancel_payment(response_code)
 
         if response.success?
           def response.authorization; psp_reference; end
         else
-          def response.to_s
-            "#{result_code} - #{refusal_reason}"
-          end
+          def response.to_s; "#{result_code} - #{refusal_reason}"; end
         end
+
         response
+      end
+
+      def void(response_code, _credit_card, _options = {})
+        cancel(response_code)
       end
 
       private
 
-      def authorize_card(money, response, options, card_details)
-        response = authorize_payment(money, response, options, card_details)
+      def authorize_card(money, source, options, card_details)
+        response = authorize_payment(money, source, options, card_details)
 
         if response.success?
           def response.authorization; psp_reference; end
@@ -109,14 +129,15 @@ module Spree
         response
       end
 
-      def authorize_payment(money, _response, options, card_details)
+      # https://github.com/wvanbergen/adyen/blob/master/lib/adyen/api.rb#L156
+      def authorize_payment(money, _source, options, card_details)
         reference = options[:order_id]
 
         provider.authorise_payment(reference,
                                    transaction_amount(options[:currency], money),
                                    adyen_shopper(options),
                                    card_details,
-                                   adyen_options)
+                                   false)
       end
     end
   end

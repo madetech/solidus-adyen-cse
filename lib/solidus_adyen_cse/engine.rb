@@ -16,7 +16,7 @@ module SolidusAdyenCse
     end
 
     initializer 'solidus_adyen_cse.assets.precompile', group: :all do |app|
-      app.config.assets.precompile += %w( encrypt.adyen.min.js )
+      app.config.assets.precompile += %w( encrypt.adyen.js )
     end
 
     def self.activate

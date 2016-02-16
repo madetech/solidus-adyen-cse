@@ -5,13 +5,12 @@ FactoryGirl.define do
   # require 'solidus_adyen_cse/factories'
 
   factory :adyen_cse_payment_method, class: Spree::Gateway::AdyenCse do
-    name 'Credit Card'
+    name 'Pay with Credit Card'
     active true
     preferred_api_username ''
     preferred_api_password ''
     preferred_merchant_account ''
     preferred_public_key ''
     preferred_test_mode true
-    preferred_three_d_secure ''
   end
 end

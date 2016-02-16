@@ -58,12 +58,14 @@
   </fieldset>
 </div>
 
-<%= javascript_include_tag 'encrypt.adyen.min.js' %>
+<%= javascript_include_tag 'encrypt.adyen.js' %>
 
 <script>
   var form = document.getElementById('checkout_form_payment'),
       key = "<%= payment_method.options[:public_key] %>",
-      options = { 'name': "<%= "payment_source[#{payment_method.id}][encrypted_data]" %>" };
+      options = {
+        'name': "<%= "order[payments_attributes][][source_attributes][encrypted_data]" %>"
+      };
 
     adyen.encrypt.createEncryptedForm(form, key, options);
 </script>

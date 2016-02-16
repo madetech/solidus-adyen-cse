@@ -1,5 +1,22 @@
 en:
   spree:
+    adyen_cse:
+      errors:
+        missing_encrypted_data: Encrypted data hasn't been set for this payment
+      payment_form_labels:
+        legend: Card Details
+        holder_name: Card Holder Name
+        number: Card Number
+        cvc: CVC
+        expiry_month: Expiration Month (MM)
+        expiry_year: Expiration Year (YYYY)
+      payment_form_placeholders:
+        holder_name: John Doe
+        number: '5555444433331111'
+        cvc: '737'
+        expiry_month: MM
+        expiry_year: YYYY
+
     api_username: API username
     api_password: API password
     merchant_account: Merchant Account

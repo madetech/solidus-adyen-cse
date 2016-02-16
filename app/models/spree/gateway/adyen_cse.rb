@@ -7,7 +7,6 @@ module Spree
       preference :api_password, :string
       preference :merchant_account, :string
       preference :public_key, :string
-      preference :three_d_secure, :string, default: false
 
       def auto_capture?
         false
@@ -19,10 +18,6 @@ module Spree
 
       def payment_profiles_supported?
         false
-      end
-
-      def use_3d_secure?
-        three_d_secure
       end
 
       def provider_class

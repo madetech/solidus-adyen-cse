@@ -4,6 +4,7 @@ module SolidusAdyenCse
     require 'solidus_core'
 
     isolate_namespace Spree
+
     engine_name 'solidus_adyen_cse'
 
     config.generators do |g|
@@ -24,6 +25,10 @@ module SolidusAdyenCse
       end
 
       Rails.configuration.action_dispatch.parameter_filter = [:encrypted_data]
+
+      Spree::Order.include(SolidusAdyenCse::CheckoutModifier)
+      Spree::Order.prepend(SolidusAdyenCse::OrderModifier)
+      Spree::Payment.include(SolidusAdyenCse::PaymentModifier)
     end
 
     config.to_prepare(&method(:activate).to_proc)

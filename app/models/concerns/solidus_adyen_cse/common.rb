@@ -8,10 +8,6 @@ module SolidusAdyenCse
       { currency: currency, value: amount }
     end
 
-    def adyen_options(options = {})
-      { recurring: false }.merge(options)
-    end
-
     def adyen_shopper(options)
       { reference: adyen_shopper_reference(options),
         email: options[:email],

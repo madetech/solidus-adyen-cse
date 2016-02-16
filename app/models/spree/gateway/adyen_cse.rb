@@ -9,7 +9,7 @@ module Spree
       preference :public_key, :string
 
       def auto_capture?
-        false
+        true
       end
 
       def method_type

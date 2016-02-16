@@ -20,6 +20,7 @@ module Spree
 
       before do
         expect(gateway.provider).to receive(:authorise_payment).and_return(response)
+        expect(gateway.provider).to receive(:capture_payment).and_return(response)
       end
 
       it 'transitions to complete' do

@@ -1,0 +1,12 @@
+engines:
+rubocop:
+  enabled: true
+  checks:
+    Rubocop/Metrics/LineLength:
+      Max: 130
+    Rubocop/Style/Documentation:
+      Enabled: false
+    Rubocop/Style/SignalException:
+      Enabled: false
+    Rubocop/Style/SingleLineMethods:
+      Enabled: false

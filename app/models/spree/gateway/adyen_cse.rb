@@ -50,17 +50,16 @@ module Spree
       end
 
       # Authorization happens between payment -> confirm so we'll capture on complete?
-      #
-      # This is our capture, this does feel quite edgy.
       def purchase(money, source, options = {})
-        order = Spree::Order.find_by(number: options[:order_id].split('-')[0])
+        order_number, payment_number = options[:order_id].split('-')
 
-        payment = Spree::Payment.where(
+        order = Spree::Order.find_by(number: order_number)
+
+        payment = Spree::Payment.find_by!(
           order_id: order.id,
-          source_id: source.id,
-          payment_method_id: source.payment_method_id,
-          state: 'processing'
-        ).last
+          payment_method_id: source.payment_method_id, # Maybe a moo assertion
+          number: payment_number
+        )
 
         capture(money, payment.response_code, options)
       end

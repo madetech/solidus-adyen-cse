@@ -12,5 +12,3 @@ nbproject
 pkg
 *.swp
 spec/dummy
-Dockerfile
-docker-compose.yml

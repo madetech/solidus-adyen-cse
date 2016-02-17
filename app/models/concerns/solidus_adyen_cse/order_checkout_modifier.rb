@@ -3,8 +3,6 @@ module SolidusAdyenCse
     extend ActiveSupport::Concern
 
     included do
-      attr_accessor :encrypted_card_data
-
       state_machine.before_transition to: :confirm,
                                       do: :authorize_adyen_cse_payments_before_confirm!
     end

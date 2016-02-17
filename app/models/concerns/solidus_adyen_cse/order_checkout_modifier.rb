@@ -3,6 +3,9 @@ module SolidusAdyenCse
     extend ActiveSupport::Concern
 
     included do
+      # TODO: Remove once our branch merged
+      attr_accessor :encrypted_card_data
+
       state_machine.before_transition to: :confirm,
                                       do: :authorize_adyen_cse_payments_before_confirm!
     end

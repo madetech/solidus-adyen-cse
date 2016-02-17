@@ -4,10 +4,10 @@
 
     <div class="field">
       <label for="adyen-encrypted-form-holder-name">
-        <%= Spree.t(:holder_name, scope: [:spree, :adyen_cse, :payment_form_labels]) %>
+        <%= Spree.t(:holder_name, scope: [:adyen_cse, :payment_form_labels]) %>
       </label>
       <input id="adyen-encrypted-form-holder-name"
-             placeholder="<%= Spree.t(:holder_name, scope: [:spree, :adyen_cse, :payment_form_placeholders]) %>"
+             placeholder="<%= Spree.t(:holder_name, scope: [:adyen_cse, :payment_form_placeholders]) %>"
              size="20"
              type="text"
              autocomplete="off"
@@ -15,9 +15,9 @@
     </div>
 
     <div class="field">
-      <label for="adyen-encrypted-form-number"><%= Spree.t(:number, scope: [:spree, :adyen_cse, :payment_form_labels]) %></label>
+      <label for="adyen-encrypted-form-number"><%= Spree.t(:number, scope: [:adyen_cse, :payment_form_labels]) %></label>
       <input id="adyen-encrypted-form-number"
-             placeholder="<%= Spree.t(:number, scope: [:spree, :adyen_cse, :payment_form_placeholders]) %>"
+             placeholder="<%= Spree.t(:number, scope: [:adyen_cse, :payment_form_placeholders]) %>"
              size="20"
              type="tel"
              autocomplete="off"
@@ -25,9 +25,9 @@
     </div>
 
     <div class="field">
-      <label for="adyen-encrypted-form-cvc"><%= Spree.t(:cvc, scope: [:spree, :adyen_cse, :payment_form_labels]) %></label>
+      <label for="adyen-encrypted-form-cvc"><%= Spree.t(:cvc, scope: [:adyen_cse, :payment_form_labels]) %></label>
       <input id="adyen-encrypted-form-cvc"
-             placeholder="<%= Spree.t(:cvc, scope: [:spree, :adyen_cse, :payment_form_placeholders]) %>"
+             placeholder="<%= Spree.t(:cvc, scope: [:adyen_cse, :payment_form_placeholders]) %>"
              size="4"
              autocomplete="off"
              data-encrypted-name="cvc"
@@ -35,22 +35,22 @@
     </div>
 
     <div class="field">
-      <label for="adyen-encrypted-form-expiry-month"><%= Spree.t(:expiry_month, scope: [:spree, :adyen_cse, :payment_form_labels]) %></label>
+      <label for="adyen-encrypted-form-expiry-month"><%= Spree.t(:expiry_month, scope: [:adyen_cse, :payment_form_labels]) %></label>
 
       <input id="adyen-encrypted-form-expiry-month"
              type="tel"
-             placeholder="<%= Spree.t(:expiry_month, scope: [:spree, :adyen_cse, :payment_form_placeholders]) %>"
+             placeholder="<%= Spree.t(:expiry_month, scope: [:adyen_cse, :payment_form_placeholders]) %>"
              maxlength="2"
              autocomplete="off"
              data-encrypted-name="expiryMonth" /> /
 
-      <label for="adyen-encrypted-form-expiry-year"><%= Spree.t(:expiry_year, scope: [:spree, :adyen_cse, :payment_form_labels]) %></label>
+      <label for="adyen-encrypted-form-expiry-year"><%= Spree.t(:expiry_year, scope: [:adyen_cse, :payment_form_labels]) %></label>
       <input id="adyen-encrypted-form-expiry-year"
              size="4"
              type="tel"
              maxlength="4"
              autocomplete="off"
-             placeholder="<%= Spree.t(:expiry_year, scope: [:spree, :adyen_cse, :payment_form_placeholders]) %>"
+             placeholder="<%= Spree.t(:expiry_year, scope: [:adyen_cse, :payment_form_placeholders]) %>"
              data-encrypted-name="expiryYear" />
     </div>
     <input type="hidden"

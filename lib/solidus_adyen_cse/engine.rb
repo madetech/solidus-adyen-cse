@@ -26,7 +26,7 @@ module SolidusAdyenCse
 
       Rails.configuration.action_dispatch.parameter_filter = [:encrypted_data]
 
-      Spree::Order.include(SolidusAdyenCse::CheckoutModifier)
+      Spree::Order.include(SolidusAdyenCse::OrderCheckoutModifier)
       Spree::Order.prepend(SolidusAdyenCse::OrderModifier)
       Spree::Payment.include(SolidusAdyenCse::PaymentModifier)
     end

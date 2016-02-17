@@ -1,5 +1,5 @@
 module SolidusAdyenCse
-  module CheckoutModifier
+  module OrderCheckoutModifier
     extend ActiveSupport::Concern
 
     included do

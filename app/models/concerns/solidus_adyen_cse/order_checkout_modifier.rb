@@ -55,20 +55,18 @@ module SolidusAdyenCse
     def authorize_adyen_cse_payments
       return true if payment_total >= total
 
-      raise raise_gateway_error(:no_payment_found) if unprocessed_adyen_cse_payments.empty?
-
       process_adyen_cse_payments
     rescue Spree::Core::GatewayError => e
       result = !Spree::Config[:allow_checkout_on_gateway_error].nil?
       errors.add(:base, e.message) && (return result)
     end
-  end
 
-  def raise_gateway_error(translation_key)
-    raise Spree::Core::GatewayError.new(Spree.t(translation_key)), Spree.t(translation_key)
-  end
+    def raise_gateway_error(translation_key)
+      raise Spree::Core::GatewayError.new(Spree.t(translation_key)), Spree.t(translation_key)
+    end
 
-  def increment_payment_total(amount)
-    self.payment_total += amount
+    def increment_payment_total(amount)
+      self.payment_total += amount
+    end
   end
 end

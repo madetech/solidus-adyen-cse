@@ -81,7 +81,7 @@ module Spree
         response
       end
 
-      def credit(money, _credit_card, response_code, _options = {})
+      def credit(money, _credit_card, response_code, options = {})
         response = provider.refund_payment(response_code,
                                            transaction_amount(options[:currency], money))
 

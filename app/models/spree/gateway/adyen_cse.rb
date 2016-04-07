@@ -69,10 +69,10 @@ module Spree
                                             transaction_amount(options[:currency], money))
 
         if response.success?
-          def response.authorization; response_code; end # Preserve original psp_reference for refunds
-
+          # Need to preserve original auth'd psp_reference stored on payment for refunds
+          response.instance_variable_set(:@response_code, response_code)
+          def response.authorization; @response_code; end
           def response.avs_result; {}; end
-
           def response.cvv_result; {}; end
         else
           def response.to_s; "#{result_code} - #{refusal_reason}"; end

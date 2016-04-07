@@ -57,7 +57,7 @@ module SolidusAdyenCse
 
       process_adyen_cse_payments
     rescue Spree::Core::GatewayError => e
-      result = !Spree::Config[:allow_checkout_on_gateway_error].nil?
+      result = !Spree::Config[:allow_checkout_on_gateway_error].blank?
       errors.add(:base, e.message) && (return result)
     end
 

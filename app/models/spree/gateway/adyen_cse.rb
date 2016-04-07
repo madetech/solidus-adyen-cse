@@ -82,8 +82,8 @@ module Spree
       end
 
       def credit(money, _credit_card, response_code, _options = {})
-        response = provider.cancel_or_refund_payment(response_code,
-                                                     transaction_amount(options[:currency], money))
+        response = provider.refund_payment(response_code,
+                                           transaction_amount(options[:currency], money))
 
         if response.success?
           def response.authorization; psp_reference; end

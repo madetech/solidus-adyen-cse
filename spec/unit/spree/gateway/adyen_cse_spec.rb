@@ -35,7 +35,7 @@ describe Spree::Gateway::AdyenCse do
     end
 
     describe '#credit' do
-      let(:method) { :cancel_or_refund_payment }
+      let(:method) { :refund_payment }
 
       subject { gateway.credit(10, credit_card, psp_reference, currency: currency).authorization }
 
@@ -67,7 +67,7 @@ describe Spree::Gateway::AdyenCse do
       end
 
       describe '#credit' do
-        let(:method) { :cancel_or_refund_payment }
+        let(:method) { :refund_payment }
         let(:expected_reponse_string) { 'Only testing' }
 
         subject { gateway.credit(10, credit_card, psp_reference, currency: currency) }

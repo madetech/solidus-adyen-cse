@@ -81,9 +81,13 @@ module Spree
         response
       end
 
-      def credit(money, _credit_card, response_code, options = {})
+      # This method will need to accept more arguements when/if payment profiles supported
+      # money, credit_card, response_code, options
+      def credit(money, response_code, options)
+        currency = options[:currency] || options[:originator].payment.currency
+
         response = provider.refund_payment(response_code,
-                                           transaction_amount(options[:currency], money))
+                                           transaction_amount(currency, money))
 
         if response.success?
           def response.authorization; psp_reference; end

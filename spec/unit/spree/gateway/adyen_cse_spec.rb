@@ -37,7 +37,7 @@ describe Spree::Gateway::AdyenCse do
     describe '#credit' do
       let(:method) { :refund_payment }
 
-      subject { gateway.credit(10, credit_card, psp_reference, currency: currency).authorization }
+      subject { gateway.credit(10, psp_reference, currency: currency).authorization }
 
       include_examples 'a successful adyen response'
     end
@@ -70,7 +70,7 @@ describe Spree::Gateway::AdyenCse do
         let(:method) { :refund_payment }
         let(:expected_reponse_string) { 'Only testing' }
 
-        subject { gateway.credit(10, credit_card, psp_reference, currency: currency) }
+        subject { gateway.credit(10, psp_reference, currency: currency) }
 
         include_examples 'a failed adyen response'
       end

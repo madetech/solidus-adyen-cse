@@ -64,15 +64,16 @@ module Spree
         capture(money, payment.response_code, options)
       end
 
+      # Need to preserve original auth'd psp_reference stored on payment for refunds
       def capture(money, response_code, options = {})
-        response = provider.capture_payment(response_code,
-                                            transaction_amount(options[:currency], money))
+        response = provider.capture_payment(response_code, transaction_amount(options[:currency], money))
 
         if response.success?
-          # Need to preserve original auth'd psp_reference stored on payment for refunds
           response.instance_variable_set(:@response_code, response_code)
           def response.authorization; @response_code; end
+
           def response.avs_result; {}; end
+
           def response.cvv_result; {}; end
         else
           def response.to_s; "#{result_code} - #{refusal_reason}"; end
@@ -86,8 +87,7 @@ module Spree
       def credit(money, response_code, options)
         currency = options[:currency] || options[:originator].payment.currency
 
-        response = provider.refund_payment(response_code,
-                                           transaction_amount(currency, money))
+        response = provider.refund_payment(response_code, transaction_amount(currency, money))
 
         if response.success?
           def response.authorization; psp_reference; end

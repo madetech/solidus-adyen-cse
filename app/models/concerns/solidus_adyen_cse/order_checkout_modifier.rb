@@ -16,8 +16,6 @@ module SolidusAdyenCse
       if authorize_adyen_cse_payments!
         true
       else
-        saved_errors = errors[:base]
-        saved_errors.each { |error| errors.add(:base, error) }
         false
       end
     end

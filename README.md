@@ -1,7 +1,7 @@
 SolidusAdyenCse
 ===============
 
-[![Build Status](https://travis-ci.org/madetech/solidus_adyen_cse.svg?branch=master)](https://travis-ci.org/madetech/solidus_adyen_cse) [![Code Climate](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/gpa.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse) [![Test Coverage](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/coverage.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse/coverage)
+[![Build Status](https://travis-ci.org/madetech/solidus_adyen_cse.svg?branch=adyen-1.6)](https://travis-ci.org/madetech/solidus_adyen_cse) [![Code Climate](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/gpa.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse) [![Test Coverage](https://codeclimate.com/github/madetech/solidus-adyen-cse/badges/coverage.svg)](https://codeclimate.com/github/madetech/solidus-adyen-cse/coverage)
 
 Introduction goes here.
 

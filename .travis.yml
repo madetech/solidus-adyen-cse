@@ -13,6 +13,3 @@ script:
 notifications:
   email:
     - seb@madetech.co.uk
-branches:
-  only:
-    - master

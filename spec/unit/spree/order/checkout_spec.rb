@@ -34,6 +34,8 @@ module Spree
       order.complete!
 
       expect(order.state).to eq('complete')
+
+      expect(order.payments.first.source.default).to be false
     end
 
     context 'when there is an existing adyen_authorized payment' do

@@ -10,7 +10,7 @@ module SolidusAdyenCse
                                       do: :authorize_adyen_cse_payments_before_confirm!
 
       state_machine.before_transition to: :complete,
-                                      do: :has_temporary_card_payment
+                                      do: :temporary_card_payment?
     end
 
     def authorize_adyen_cse_payments_before_confirm!
@@ -35,12 +35,11 @@ module SolidusAdyenCse
 
     private
 
-    def has_temporary_card_payment
+    def temporary_card_payment?
       return if valid_credit_cards.blank?
+      return unless valid_credit_cards.first.payment_method.method_type == 'adyen_cse'
 
-      if valid_credit_cards.first.payment_method.method_type == 'adyen_cse'
-        temporary_credit_card = true
-      end
+      self.temporary_credit_card = true
     end
 
     def encrypted_data_for_payment_source(payment_method_id)

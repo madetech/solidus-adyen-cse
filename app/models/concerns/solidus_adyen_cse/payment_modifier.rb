@@ -8,9 +8,6 @@ module SolidusAdyenCse
       state_machine.before_transition to: :invalid,
                                       do: :cancel_old_adyen_cse_payment
 
-      state_machine.after_transition to: :completed,
-                                     do: :unset_default
-
       state_machine.event :adyen_authorize do
         transition from: [:checkout, :processing], to: :adyen_authorized
       end
@@ -40,10 +37,6 @@ module SolidusAdyenCse
     end
 
     private
-
-    def unset_default
-      source.update(default: false)
-    end
 
     def cancel_old_adyen_cse_payments
       return if store_credit? && %w( invalid failed ).include?(state)

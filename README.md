@@ -38,7 +38,6 @@ Simply add this require statement to your spec_helper:
 require 'solidus_adyen_cse/factories'
 ```
 
-Test Cards
-https://www.adyen.com/home/support/knowledgebase/implementation-articles#645760d2-732e-4150-b51e-1b9bc01bc217
+Test Cards: https://docs.adyen.com/support/integration#testcardnumbers
 
 Copyright (c) 2016 Made Tech, released under the New BSD License

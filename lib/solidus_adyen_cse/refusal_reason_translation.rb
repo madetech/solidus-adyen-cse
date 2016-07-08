@@ -1,6 +1,6 @@
 module SolidusAdyenCse
   class RefusalReasonTranslation
-    ERROR_CODE_REGEX = %r{(?<code>\d{3})\s(?<message>.*)}.freeze
+    ERROR_CODE_REGEX = /(?<code>\d{3})\s(?<message>.*)/.freeze
 
     def initialize(refusal_reason)
       @refusal_reason = refusal_reason
@@ -17,7 +17,7 @@ module SolidusAdyenCse
     private
 
     def i18n_fallback
-      if has_error_code?
+      if error_code?
         error[:message]
       else
         @refusal_reason
@@ -28,7 +28,7 @@ module SolidusAdyenCse
       if has_error_code?
         error[:code].to_sym
       else
-        @refusal_reason.downcase.gsub(%r{\W}, '').to_sym
+        @refusal_reason.downcase.gsub(/\W/, '').to_sym
       end
     end
 
@@ -36,7 +36,7 @@ module SolidusAdyenCse
       reason_regex
     end
 
-    def has_error_code?
+    def error_code?
       reason_regex.present?
     end
 

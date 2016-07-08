@@ -18,6 +18,15 @@ describe Spree::Gateway::AdyenCse do
     double('Response', response_attr)
   end
 
+  let(:active_merchant_response) do
+    ActiveMerchant::Billing::Response.new(
+      response.success,
+      message(response),
+      {},
+      authorization: response.psp_reference
+    )
+  end
+
   it { expect(subject.method_type).to eq('adyen_cse') }
   it { expect(subject.actions).to match_array(%w(credit void)) }
 
@@ -59,7 +68,7 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#capture' do
         let(:method) { :capture_payment }
-        let(:expected_reponse_string) { 'T35T - Only testing' }
+        let(:expected_reponse_string) { 'Only testing' }
 
         subject { gateway.capture(10, psp_reference, currency: currency) }
 
@@ -77,12 +86,24 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#void' do
         let(:method) { :cancel_payment }
-        let(:expected_reponse_string) { 'T35T - Only testing' }
+        let(:expected_reponse_string) { 'Only testing' }
 
         subject { gateway.void(psp_reference, credit_card) }
 
         include_examples 'a failed adyen response'
       end
+    end
+  end
+
+  private
+
+  def message(response)
+    if response.success?
+      response.result_code
+    else
+      translation = ::SolidusAdyenCse::RefusalReasonTranslation.new(response.refusal_reason)
+
+      Spree.t(translation.key, scope: 'adyen_cse.gateway_errors', default: translation.default_text)
     end
   end
 end

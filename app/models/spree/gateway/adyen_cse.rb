@@ -68,18 +68,7 @@ module Spree
       def capture(money, response_code, options = {})
         response = provider.capture_payment(response_code, transaction_amount(options[:currency], money))
 
-        if response.success?
-          response.instance_variable_set(:@response_code, response_code)
-          def response.authorization; @response_code; end
-
-          def response.avs_result; {}; end
-
-          def response.cvv_result; {}; end
-        else
-          def response.to_s; "#{result_code} - #{refusal_reason}"; end
-        end
-
-        response
+        handle_response(response, response_code)
       end
 
       # This method will need to accept more arguements when/if payment profiles supported
@@ -89,25 +78,13 @@ module Spree
 
         response = provider.refund_payment(response_code, transaction_amount(currency, money))
 
-        if response.success?
-          def response.authorization; psp_reference; end
-        else
-          def response.to_s; refusal_reason; end
-        end
-
-        response
+        handle_response(response, response.psp_reference)
       end
 
       def cancel(response_code)
         response = provider.cancel_payment(response_code)
 
-        if response.success?
-          def response.authorization; psp_reference; end
-        else
-          def response.to_s; "#{result_code} - #{refusal_reason}"; end
-        end
-
-        response
+        handle_response(response, response.psp_reference)
       end
 
       def void(response_code, _credit_card, _options = {})
@@ -119,17 +96,7 @@ module Spree
       def authorize_card(money, source, options, card_details)
         response = authorize_payment(money, source, options, card_details)
 
-        if response.success?
-          def response.authorization; psp_reference; end
-
-          def response.avs_result; {}; end
-
-          def response.cvv_result; { 'code' => result_code }; end
-        else
-          def response.to_s; "#{result_code} - #{refusal_reason}"; end
-        end
-
-        response
+        handle_response(response, response.psp_reference)
       end
 
       # https://github.com/wvanbergen/adyen/blob/master/lib/adyen/api.rb#L156
@@ -141,6 +108,25 @@ module Spree
                                    adyen_shopper(options),
                                    card_details,
                                    false)
+      end
+
+      def handle_response(response, original_reference)
+        ActiveMerchant::Billing::Response.new(
+          response.success?,
+          message(response),
+          {},
+          authorization: original_reference
+        )
+      end
+
+      def message(response)
+        if response.success?
+          response.try(:result_code)
+        else
+          translation = ::SolidusAdyenCse::RefusalReasonTranslation.new(response.refusal_reason)
+
+          Spree.t(translation.key, scope: 'adyen_cse.gateway_errors', default: translation.default_text)
+        end
       end
     end
   end

@@ -1,6 +1,6 @@
 module SolidusAdyenCse
   class RefusalReasonTranslation
-    ERROR_CODE_REGEX = /(?<code>\d{3})\s(?<message>.*)/.freeze
+    ERROR_CODE_REGEX = /(?<code>\d{3})\s(?<message>.*)/
 
     def initialize(refusal_reason)
       @refusal_reason = refusal_reason

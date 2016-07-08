@@ -16,6 +16,23 @@ en:
         cvc: '737'
         expiry_month: MM
         expiry_year: YYYY
+      gateway_errors:
+        3dsecureauthenticationfailed: 3D Secure authentication was not executed or it did not execute successfully.
+        acquirerfraus: Possible fraud
+        blockedcard: Blocked Card
+        cancelled: The transaction was cancelled
+        cvcdeclined: CVC Declined
+        refused: Payment unsuccessful
+        declined: Card Declined
+        acquirererror: Error with Bank
+        expiredcard: Expired Card
+        default_refusal_reason: 'There was an error processing your payment'
+        101: 'Please enter a valid card number'
+        103: 'Please enter a valid CVC'
+        128: 'Please enter a Card Holder Name'
+        129: 'Please enter a valid expiration date'
+        140: 'Please enter a valid expiration date'
+        141: 'Please enter a valid expiration date'
 
     api_username: API username
     api_password: API password

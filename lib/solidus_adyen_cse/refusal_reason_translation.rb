@@ -25,7 +25,7 @@ module SolidusAdyenCse
     end
 
     def i18n_translation_key
-      if has_error_code?
+      if error_code?
         error[:code].to_sym
       else
         @refusal_reason.downcase.gsub(/\W/, '').to_sym

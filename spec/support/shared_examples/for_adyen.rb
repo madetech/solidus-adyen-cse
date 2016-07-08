@@ -4,16 +4,12 @@ end
 
 shared_examples 'a failed adyen response' do
   it 'will return the correct psp_reference' do
-    expect(subject.psp_reference).to eq(psp_reference)
+    expect(subject.authorization).to eq(psp_reference)
   end
 
-  it 'will return a refusal reason' do
-    expect(subject.refusal_reason).to be_present
-  end
-
-  describe '#to_s' do
+  describe '#message' do
     it 'will combine the result_code and refusal_reason' do
-      expect(subject.to_s).to eq(expected_reponse_string)
+      expect(subject.message).to eq(expected_reponse_string)
     end
   end
 end

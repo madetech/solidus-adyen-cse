@@ -63,12 +63,12 @@ describe Spree::Gateway::AdyenCse do
       let(:success) { false }
 
       let(:additional_response_attr) do
-        { result_code: 'T35T', refusal_reason: 'Only testing' }
+        { result_code: 'T35T', refusal_reason: 'Refused' }
       end
 
       describe '#capture' do
         let(:method) { :capture_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.capture(10, psp_reference, currency: currency) }
 
@@ -77,7 +77,7 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#credit' do
         let(:method) { :refund_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.credit(10, psp_reference, currency: currency) }
 
@@ -86,7 +86,7 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#void' do
         let(:method) { :cancel_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.void(psp_reference, credit_card) }
 

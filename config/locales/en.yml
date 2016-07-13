@@ -26,6 +26,7 @@ en:
         declined: Card Declined
         acquirererror: Error with Bank
         expiredcard: Expired Card
+        transactionnotpermitted: 'Transaction Not Permitted'
         default_refusal_reason: 'There was an error processing your payment'
         101: 'Please enter a valid card number'
         103: 'Please enter a valid CVC'

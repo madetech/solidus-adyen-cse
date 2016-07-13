@@ -1,0 +1,5 @@
+nl:
+  spree:
+    adyen_cse:
+      gateway_errors:
+        refused: Betaling mislukt

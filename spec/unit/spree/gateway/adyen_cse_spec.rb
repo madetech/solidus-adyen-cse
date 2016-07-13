@@ -63,12 +63,12 @@ describe Spree::Gateway::AdyenCse do
       let(:success) { false }
 
       let(:additional_response_attr) do
-        { result_code: 'T35T', refusal_reason: 'Only testing' }
+        { result_code: 'T35T', refusal_reason: 'Refused' }
       end
 
       describe '#capture' do
         let(:method) { :capture_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.capture(10, psp_reference, currency: currency) }
 
@@ -77,7 +77,7 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#credit' do
         let(:method) { :refund_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.credit(10, psp_reference, currency: currency) }
 
@@ -86,9 +86,28 @@ describe Spree::Gateway::AdyenCse do
 
       describe '#void' do
         let(:method) { :cancel_payment }
-        let(:expected_reponse_string) { 'Only testing' }
+        let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.void(psp_reference, credit_card) }
+
+        include_examples 'a failed adyen response'
+      end
+
+      context 'when in another locale' do
+        around(:example) do |example|
+          original_locale = I18n.locale
+
+          I18n.locale = :nl
+
+          example.run
+
+          I18n.locale = original_locale
+        end
+
+        subject { gateway.capture(10, psp_reference, currency: currency) }
+
+        let(:method) { :capture_payment }
+        let(:expected_reponse_string) { 'Betaling mislukt' }
 
         include_examples 'a failed adyen response'
       end

@@ -52,7 +52,7 @@ describe Spree::Gateway::AdyenCse do
     end
 
     describe '#void' do
-      let(:method) { :cancel_payment }
+      let(:method) { :cancel_or_refund_payment }
 
       subject { gateway.void(psp_reference, credit_card).authorization }
 
@@ -85,7 +85,7 @@ describe Spree::Gateway::AdyenCse do
       end
 
       describe '#void' do
-        let(:method) { :cancel_payment }
+        let(:method) { :cancel_or_refund_payment }
         let(:expected_reponse_string) { 'Payment unsuccessful' }
 
         subject { gateway.void(psp_reference, credit_card) }

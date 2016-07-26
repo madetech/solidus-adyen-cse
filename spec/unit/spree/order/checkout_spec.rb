@@ -48,7 +48,7 @@ module Spree
       let!(:canceled_payment) { create_payment('adyen_authorized', cancel_psp_reference) }
 
       before do
-        expect(gateway.provider).to receive(:cancel_payment)
+        expect(gateway.provider).to receive(:cancel_or_refund_payment)
           .with(cancel_psp_reference)
           .and_return(cancel_response)
       end

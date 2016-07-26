@@ -82,9 +82,9 @@ module Spree
       end
 
       def cancel(response_code)
-        response = provider.cancel_payment(response_code)
+        response = provider.cancel_or_refund_payment(response_code)
 
-        handle_response(response, response.psp_reference)
+        handle_response(response, response_code)
       end
 
       def void(response_code, _credit_card, _options = {})

@@ -37,8 +37,7 @@ module SolidusAdyenCse
 
     def temporary_card_payment?
       return if valid_credit_cards.blank?
-      return unless valid_credit_cards.first.payment_method.method_type == 'adyen_cse'
-
+      return unless valid_credit_cards.first.payment_method.partial_name == 'adyen_cse'
       self.temporary_credit_card = true
     end
 
